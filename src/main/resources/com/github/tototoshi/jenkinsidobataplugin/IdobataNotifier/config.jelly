@@ -17,7 +17,6 @@
     <select name="format">
       <f:option value="text" selected="${instance.format=='text'}">text</f:option>
       <f:option value="html" selected="${instance.format=='html'}">html</f:option>
-      <f:option value="image" selected="${instance.format=='image'}">image</f:option>
     </select>
   </f:entry>
 
