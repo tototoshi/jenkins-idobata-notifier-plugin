@@ -2,6 +2,7 @@
   <f:entry title="url" field="url">
     <f:textbox />
   </f:entry>
+
   <f:entry name="notificationStrategy" title="notificationStrategy" field="notificationStrategy">
     <select name="notificationStrategy">
       <f:option value="all" selected="${instance.notificationStrategy=='all'}">all</f:option>
@@ -11,6 +12,7 @@
       <f:option value="change" selected="${instance.notificationStrategy=='change'}">change</f:option>
     </select>
   </f:entry>
+
   <f:entry name="format" title="format" field="format">
     <select name="format">
       <f:option value="text" selected="${instance.format=='text'}">text</f:option>
@@ -18,5 +20,13 @@
       <f:option value="image" selected="${instance.format=='image'}">image</f:option>
     </select>
   </f:entry>
-  
+
+  <f:entry name="successMessage" title="successMessage" field="successMessage">
+    <f:textarea/>
+  </f:entry>
+
+  <f:entry name="successMessage" title="failureMessage" field="failureMessage">
+    <f:textarea/>
+  </f:entry>
+
 </j:jelly>
