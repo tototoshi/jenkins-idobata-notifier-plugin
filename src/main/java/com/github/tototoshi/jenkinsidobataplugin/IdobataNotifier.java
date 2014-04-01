@@ -58,6 +58,13 @@ public class IdobataNotifier extends Notifier {
         return true;
     }
 
+    /**
+     * Create request for idobata
+     *
+     * @param format text|html|image
+     * @return Request
+     * @throws UnsupportedEncodingException
+     */
     private Request createRequest(String format) throws UnsupportedEncodingException {
         byte[] formData = ("source=" + URLEncoder.encode("<h1>Test</h1>", "utf-8")).getBytes();
         if (format.equals("html")) {
