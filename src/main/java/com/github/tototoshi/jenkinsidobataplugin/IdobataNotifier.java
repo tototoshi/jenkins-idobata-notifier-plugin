@@ -11,11 +11,10 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
 import jenkins.model.JenkinsLocationConfiguration;
-import org.apache.tools.ant.taskdefs.email.Mailer;
 import org.kohsuke.stapler.DataBoundConstructor;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 
 public class IdobataNotifier extends Notifier {
@@ -111,42 +110,8 @@ public class IdobataNotifier extends Notifier {
     }
 
     private boolean needNotification(AbstractBuild<?, ?> build) {
-        if (notificationStrategy.equals("all")) {
-            return true;
-        }
-
-        Result result = build.getResult();
-        Result previousResult = build.getPreviousBuild().getResult();
-
-        if (notificationStrategy.equals("failure")) {
-            return result == Result.FAILURE;
-        }
-
-        if (notificationStrategy.equals("failure and fixed")) {
-            if (result == Result.FAILURE) {
-                return true;
-            }
-
-            if (result == Result.SUCCESS) {
-                return previousResult == Result.FAILURE;
-            }
-        }
-
-        if (notificationStrategy.equals("new failure and fixed")) {
-            if (result == Result.FAILURE) {
-                return previousResult != Result.FAILURE;
-            }
-
-            if (result == Result.SUCCESS) {
-                return previousResult == Result.FAILURE;
-            }
-        }
-
-        if (notificationStrategy.equals("change")) {
-            return result != previousResult;
-        }
-
-        return false;
+        NotificationStrategy strategy = NotificationStrategy.fromString(notificationStrategy);
+        return strategy.needNotification(build);
     }
 
 
