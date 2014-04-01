@@ -4,13 +4,14 @@ import com.m3.curly.HTTP;
 import com.m3.curly.Request;
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.*;
-import hudson.scm.ChangeLogSet;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
+import hudson.model.BuildListener;
+import hudson.model.Result;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
-import jenkins.model.JenkinsLocationConfiguration;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import java.io.IOException;
@@ -84,23 +85,7 @@ public class IdobataNotifier extends Notifier {
      */
     private Request createRequest(AbstractBuild<?, ?> build, String format) throws UnsupportedEncodingException {
         String message = selectMessage(build);
-
-        StringBuilder userBuilder = new StringBuilder();
-        for (User user : build.getCulprits()) {
-            userBuilder.append(user.getDisplayName() + " ");
-        }
-        StringBuilder changeSetBuilder = new StringBuilder();
-        for(ChangeLogSet.Entry entry : build.getChangeSet()) {
-            changeSetBuilder.append(entry.getAuthor() + " : " + entry.getMsg() + "\n");
-        }
-
-        String replacedMessage = message.replace("${user}", userBuilder.toString());
-        replacedMessage = replacedMessage.replace("${result}", build.getResult().toString());
-        replacedMessage = replacedMessage.replace("${project}", build.getProject().getName());
-        replacedMessage = replacedMessage.replace("${number}", String.valueOf(build.number));
-        replacedMessage = replacedMessage.replace("${url}", JenkinsLocationConfiguration.get().getUrl() + build.getUrl());
-        replacedMessage = replacedMessage.replace("${changeSet}", changeSetBuilder.toString());
-
+        String replacedMessage = new SimpleTemplate(message).render(build);
         byte[] formData = ("source=" + URLEncoder.encode(replacedMessage, "utf-8")).getBytes();
         if (format.equals("html")) {
             return new Request(url + "?format=html").setBody(formData, "application/x-www-form-urlencoded");
