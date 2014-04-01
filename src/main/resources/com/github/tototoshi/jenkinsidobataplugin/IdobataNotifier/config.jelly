@@ -3,12 +3,19 @@
     <f:textbox />
   </f:entry>
   <f:entry name="notificationStrategy" title="notificationStrategy" field="notificationStrategy">
-    <select name="notificationStrategy">
-      <option value="all">all</option>
-      <option value="failure">failure</option>
-      <option value="failure and fixed">failure and fixed</option>
-      <option value="new failure and fixed">new failure and fixed</option>
-      <option value="change">change</option>
+      <select name="notificationStrategy">
+        <option value="all">all</option>
+        <option value="failure">failure</option>
+        <option value="failure and fixed">failure and fixed</option>
+        <option value="new failure and fixed">new failure and fixed</option>
+        <option value="change">change</option>
+      </select>
+  </f:entry>
+  <f:entry name="format" title="format" field="format">
+    <select name="format">
+      <option value="text">text</option>
+      <option value="html">html</option>
+      <option value="image">image</option>
     </select>
   </f:entry>
 </j:jelly>
