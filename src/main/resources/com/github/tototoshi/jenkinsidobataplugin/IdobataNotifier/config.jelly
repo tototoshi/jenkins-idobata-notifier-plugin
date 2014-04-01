@@ -3,19 +3,20 @@
     <f:textbox />
   </f:entry>
   <f:entry name="notificationStrategy" title="notificationStrategy" field="notificationStrategy">
-      <select name="notificationStrategy">
-        <option value="all">all</option>
-        <option value="failure">failure</option>
-        <option value="failure and fixed">failure and fixed</option>
-        <option value="new failure and fixed">new failure and fixed</option>
-        <option value="change">change</option>
-      </select>
+    <select name="notificationStrategy">
+      <f:option value="all" selected="${instance.notificationStrategy=='all'}">all</f:option>
+      <f:option value="failure" selected="${instance.notificationStrategy=='failure'}">failure</f:option>
+      <f:option value="failure and fixed" selected="${instance.notificationStrategy=='failure and fixed'}">failure and fixed</f:option>
+      <f:option value="new failure and fixed" selected="${instance.notificationStrategy=='new failure and fixed'}">new failure and fixed</f:option>
+      <f:option value="change" selected="${instance.notificationStrategy=='change'}">change</f:option>
+    </select>
   </f:entry>
   <f:entry name="format" title="format" field="format">
     <select name="format">
-      <option value="text">text</option>
-      <option value="html">html</option>
-      <option value="image">image</option>
+      <f:option value="text" selected="${instance.format=='text'}">text</f:option>
+      <f:option value="html" selected="${instance.format=='html'}">html</f:option>
+      <f:option value="image" selected="${instance.format=='image'}">image</f:option>
     </select>
   </f:entry>
+  
 </j:jelly>
