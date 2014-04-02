@@ -14,7 +14,7 @@ public enum NotificationStrategy {
     FAILURE("failure") {
         @Override
         public boolean needNotification(AbstractBuild<?, ?> build) {
-            return build.getResult() == Result.FAILURE;
+            return build.getResult() != Result.SUCCESS;
         }
     },
     FAILURE_AND_FIXED("failure and fixed") {
@@ -22,7 +22,7 @@ public enum NotificationStrategy {
         public boolean needNotification(AbstractBuild<?, ?> build) {
             Result result = build.getResult();
             Result previousResult = build.getPreviousBuild().getResult();
-            return result == Result.FAILURE || (result == Result.SUCCESS && previousResult != Result.SUCCESS);
+            return result != Result.SUCCESS || (result == Result.SUCCESS && previousResult != Result.SUCCESS);
         }
     },
     NEW_FAILURE_AND_FIXED("new failure and fixed") {
@@ -30,7 +30,7 @@ public enum NotificationStrategy {
         public boolean needNotification(AbstractBuild<?, ?> build) {
             Result result = build.getResult();
             Result previousResult = build.getPreviousBuild().getResult();
-            return (result == Result.FAILURE && previousResult != Result.FAILURE)
+            return (result != Result.SUCCESS && previousResult == Result.SUCCESS)
                     || (result == Result.SUCCESS && previousResult != Result.SUCCESS);
         }
     },
