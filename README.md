@@ -1,4 +1,4 @@
-# jenkins-idobata-plugin
+# jenkins-idobata-notifier-plugin
 
 
 ![./screenshot1.png](./screenshot1.png)
