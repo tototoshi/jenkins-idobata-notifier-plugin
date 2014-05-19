@@ -79,19 +79,27 @@ public class IdobataNotifier extends Notifier {
     /**
      * Create request for idobata
      *
+     * You can post a message with source parameter like below:
+     *
+     * $ curl --data-urlencode "source=hello, world" https://idobata.io/hook/bc8d4f4e-80f6-4018-a6a5-af56b3e9a251
+     * You can also use HTML format:
+     *
+     * $ curl --data-urlencode "source=>h1>hi</h1>" -d format=html https://idobata.io/hook/bc8d4f4e-80f6-4018-a6a5-af56b3e9a251
+     * Additionally, you can post image with image parameter:
+     *
+     * $ curl --form image=@/path/to/image.png https://idobata.io/hook/bc8d4f4e-80f6-4018-a6a5-af56b3e9a251
+     *
      * @param format text|html|image
      * @return Request
      * @throws UnsupportedEncodingException
      */
     private Request createRequest(AbstractBuild<?, ?> build, String format) throws UnsupportedEncodingException {
-        String message = selectMessage(build);
-        String replacedMessage = new SimpleTemplate(message).render(build);
-        byte[] formData = ("source=" + URLEncoder.encode(replacedMessage, "utf-8")).getBytes();
+        String message = "source=" + new SimpleTemplate(selectMessage(build)).render(build);
         if (format.equals("html")) {
-            return new Request(url + "?format=html").setBody(formData, "application/x-www-form-urlencoded");
-        } else {
-            return new Request(url).setBody(formData, "application/x-www-form-urlencoded");
+            message = "format=html&" + message;
         }
+        byte[] formData = message.getBytes();
+        return new Request(url).setBody(formData, "application/x-www-form-urlencoded");
     }
 
     private boolean needNotification(AbstractBuild<?, ?> build) {
