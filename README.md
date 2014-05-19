@@ -6,6 +6,8 @@
 
 ## Example configuration
 
+ - Use 'Generic hook' (not 'Jenkins hook')
+
 ![./screenshot2.png](./screenshot2.png)
 
 ## How to build and install
